@@ -307,9 +307,9 @@ def main():
         # Write empty results if needed by downstream tools
         output_data = {"last_updated_utc": start_time_iso, "project_url": PRIMARY_PROJECT_REPO_URL, "dependencies": []}
         os.makedirs('docs', exist_ok=True)
-        with open('docs/project_deps_data.json', 'w', encoding='utf-8') as f:
+        with open('docs/data.json', 'w', encoding='utf-8') as f:
             json.dump(output_data, f, indent=2, ensure_ascii=False)
-        print("📄 Empty results written to docs/project_deps_data.json")
+        print("📄 Empty results written to docs/data.json")
         sys.exit(0)
     
     print(f"\n🔎 Found {len(resolved_dependencies)} dependencies in Package.resolved. Checking their latest versions...")
@@ -387,7 +387,7 @@ def main():
     }
     
     os.makedirs('docs', exist_ok=True) # Ensure docs directory exists
-    output_file = 'docs/project_deps_data.json'
+    output_file = 'docs/data.json'
     try:
         with open(output_file, 'w', encoding='utf-8') as f:
             json.dump(output_data, f, indent=2, ensure_ascii=False)

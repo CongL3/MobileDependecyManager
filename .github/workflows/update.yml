@@ -1,4 +1,4 @@
-name: 📊 Update Dependency Versions
+name: 📊 Update Project Dependencies from Package.resolved
 
 on:
   # Run every Monday at 9 AM UTC
@@ -29,7 +29,7 @@ jobs:
           python -m pip install --upgrade pip
           # No external dependencies needed - using only stdlib
           
-      - name: 🔍 Check dependency versions
+      - name: 🔍 Check project dependency versions from Package.resolved
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -40,10 +40,10 @@ jobs:
         run: |
           if git diff --quiet docs/data.json; then
             echo "changed=false" >> $GITHUB_OUTPUT
-            echo "No changes detected in dependency versions"
+            echo "No changes detected in project dependency versions"
           else
             echo "changed=true" >> $GITHUB_OUTPUT
-            echo "Changes detected in dependency versions"
+            echo "Changes detected in project dependency versions"
             git diff docs/data.json
           fi
           
@@ -56,9 +56,9 @@ jobs:
           
           # Add and commit changes
           git add docs/data.json
-          git commit -m "📊 Automated dependency version update
+          git commit -m "📊 Automated project dependency version update
 
-          Updated dependency versions on $(date -u +'%Y-%m-%d at %H:%M UTC')
+          Updated dependency versions from Package.resolved on $(date -u +'%Y-%m-%d at %H:%M UTC')
           
           This update was performed automatically by GitHub Actions."
           
@@ -67,18 +67,18 @@ jobs:
           
       - name: 📝 Summary
         run: |
-          echo "## 📊 Dependency Update Summary" >> $GITHUB_STEP_SUMMARY
+          echo "## 📊 Project Dependency Update Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           
           if [ "${{ steps.check_changes.outputs.changed }}" == "true" ]; then
             echo "✅ **Changes detected and committed**" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
-            echo "The dependency data has been updated and pushed to the repository." >> $GITHUB_STEP_SUMMARY
+            echo "The project dependency data has been updated and pushed to the repository." >> $GITHUB_STEP_SUMMARY
             echo "View the updated dashboard at: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}" >> $GITHUB_STEP_SUMMARY
           else
             echo "ℹ️ **No changes detected**" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
-            echo "All dependency versions are current - no updates needed." >> $GITHUB_STEP_SUMMARY
+            echo "All project dependency versions are current - no updates needed." >> $GITHUB_STEP_SUMMARY
           fi
           
           echo "" >> $GITHUB_STEP_SUMMARY

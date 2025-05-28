@@ -315,28 +315,6 @@
             document.getElementById('errorCount').textContent = errors;
         }
 
-        function renderTable(dependencies) {
-            const tbody = document.getElementById('dependencyTableBody');
-            tbody.innerHTML = '';
-
-            dependencies.forEach(dep => {
-                const row = document.createElement('tr');
-                
-                row.innerHTML = `
-                    <td>
-                        <div class="dependency-name">${dep.name}</div>
-                        <a href="${dep.url}" target="_blank" class="dependency-url">${dep.url}</a>
-                    </td>
-                    <td><span class="version">${dep.current}</span></td>
-                    <td><span class="version">${dep.latest}</span></td>
-                    <td><span class="status ${getStatusClass(dep.status)}">${dep.status}</span></td>
-                    <td><span class="notes">${dep.notes || ''}</span></td>
-                `;
-                
-                tbody.appendChild(row);
-            });
-        }
-
         async function loadDependencyData() {
             try {
                 const response = await fetch('data.json');
@@ -347,8 +325,14 @@
                 
                 const data = await response.json();
                 
-                // Update last updated time
-                document.getElementById('lastUpdated').textContent = formatDate(data.last_updated);
+                // Update last updated time - handle both old and new format
+                const lastUpdated = data.last_updated_utc || data.last_updated;
+                document.getElementById('lastUpdated').textContent = formatDate(lastUpdated);
+                
+                // Update project information if available
+                if (data.project_url) {
+                    updateProjectInfo(data);
+                }
                 
                 // Update statistics
                 updateStats(data.dependencies);
@@ -367,6 +351,61 @@
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('error').style.display = 'block';
             }
+        }
+
+        function updateProjectInfo(data) {
+            // Add project information to the header if it doesn't exist
+            const header = document.querySelector('.header');
+            let projectInfo = document.getElementById('projectInfo');
+            
+            if (!projectInfo) {
+                projectInfo = document.createElement('div');
+                projectInfo.id = 'projectInfo';
+                projectInfo.style.marginTop = '10px';
+                projectInfo.style.fontSize = '0.9rem';
+                projectInfo.style.opacity = '0.8';
+                header.appendChild(projectInfo);
+            }
+            
+            let infoText = `📱 Project: <a href="${data.project_url}" target="_blank" style="color: #90cdf4; text-decoration: none;">${data.project_url}</a>`;
+            if (data.project_ref_used && data.project_ref_used !== 'default branch') {
+                infoText += ` (${data.project_ref_used})`;
+            }
+            if (data.package_resolved_path) {
+                infoText += `<br>📄 Dependencies from: ${data.package_resolved_path}`;
+            }
+            
+            projectInfo.innerHTML = infoText;
+        }
+
+        function renderTable(dependencies) {
+            const tbody = document.getElementById('dependencyTableBody');
+            tbody.innerHTML = '';
+
+            dependencies.forEach(dep => {
+                const row = document.createElement('tr');
+                
+                // Handle both old and new data formats
+                const name = dep.name;
+                const url = dep.source_url || dep.url;
+                const current = dep.resolved_version || dep.current;
+                const latest = dep.latest_available_version || dep.latest;
+                const status = dep.status;
+                const notes = dep.notes || '';
+                
+                row.innerHTML = `
+                    <td>
+                        <div class="dependency-name">${name}</div>
+                        <a href="${url}" target="_blank" class="dependency-url">${url}</a>
+                    </td>
+                    <td><span class="version">${current}</span></td>
+                    <td><span class="version">${latest}</span></td>
+                    <td><span class="status ${getStatusClass(status)}">${status}</span></td>
+                    <td><span class="notes">${notes}</span></td>
+                `;
+                
+                tbody.appendChild(row);
+            });
         }
 
         // Load data when page loads
