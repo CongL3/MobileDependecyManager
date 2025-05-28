@@ -33,7 +33,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          python scripts/check_versions.py
+          python scripts/check_versions2.py
           
       - name: 📊 Check for changes
         id: check_changes
