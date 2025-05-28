@@ -1,0 +1,81 @@
+{
+  "last_updated": "2025-05-28T21:52:04.677367",
+  "dependencies": [
+    {
+      "name": "AlertToast",
+      "url": "https://github.com/elai950/AlertToast",
+      "current": "1.3.9",
+      "latest": "1.3.9",
+      "status": "✅ Up to Date"
+    },
+    {
+      "name": "Firebase",
+      "url": "https://github.com/firebase/firebase-ios-sdk.git",
+      "current": "10.0.0",
+      "latest": "11.13.0",
+      "status": "⚠️ Update Available"
+    },
+    {
+      "name": "Lottie",
+      "url": "https://github.com/airbnb/lottie-ios",
+      "current": "4.0.0",
+      "latest": "4.5.2",
+      "status": "⚠️ Update Available"
+    },
+    {
+      "name": "Mantis",
+      "url": "https://github.com/guoyingtao/Mantis",
+      "current": "2.8.0",
+      "latest": "v2.25.2",
+      "status": "⚠️ Update Available"
+    },
+    {
+      "name": "Reachability",
+      "url": "https://github.com/ashleymills/Reachability.swift",
+      "current": "master",
+      "latest": "21d1dc4",
+      "status": "ℹ️ Tracks Branch",
+      "notes": "Tracking master branch"
+    },
+    {
+      "name": "SDWebImageSwiftUI",
+      "url": "https://github.com/SDWebImage/SDWebImageSwiftUI",
+      "current": "3.1.3",
+      "latest": "Unknown",
+      "status": "🚨 Error Checking",
+      "notes": "Could not fetch latest version"
+    },
+    {
+      "name": "GoogleMobileAds",
+      "url": "https://github.com/googleads/swift-package-manager-google-mobile-ads",
+      "current": "11.0.0",
+      "latest": "Unknown",
+      "status": "🚨 Error Checking",
+      "notes": "Could not fetch latest version"
+    },
+    {
+      "name": "GoogleUserMessagingPlatform",
+      "url": "https://github.com/googleads/swift-package-manager-user-messaging",
+      "current": "2.1.0",
+      "latest": "Unknown",
+      "status": "🚨 Error Checking",
+      "notes": "Could not fetch latest version"
+    },
+    {
+      "name": "swiftui-introspect",
+      "url": "https://github.com/siteline/SwiftUI-Introspect.git",
+      "current": "0.2.3",
+      "latest": "Unknown",
+      "status": "🚨 Error Checking",
+      "notes": "Could not fetch latest version"
+    },
+    {
+      "name": "TOCropViewController",
+      "url": "https://github.com/TimOliver/TOCropViewController",
+      "current": "2.6.1",
+      "latest": "Unknown",
+      "status": "🚨 Error Checking",
+      "notes": "Could not fetch latest version"
+    }
+  ]
+}

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 Dependency Version Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .last-updated {
+            background: #f7fafc;
+            padding: 15px 30px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px 30px;
+            background: #f7fafc;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .up-to-date { color: #38a169; }
+        .updates-available { color: #dd6b20; }
+        .tracks-branch { color: #3182ce; }
+        .error { color: #e53e3e; }
+
+        .table-container {
+            padding: 30px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        th {
+            background: #4a5568;
+            color: white;
+            padding: 15px 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: middle;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) {
+            background: #f7fafc;
+        }
+
+        .dependency-name {
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .dependency-url {
+            color: #3182ce;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .dependency-url:hover {
+            text-decoration: underline;
+        }
+
+        .version {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            background: #edf2f7;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .status.up-to-date {
+            background: #f0fff4;
+            color: #22543d;
+            border: 1px solid #9ae6b4;
+        }
+
+        .status.update-available {
+            background: #fffaf0;
+            color: #744210;
+            border: 1px solid #fbd38d;
+        }
+
+        .status.tracks-branch {
+            background: #ebf8ff;
+            color: #2a4365;
+            border: 1px solid #90cdf4;
+        }
+
+        .status.error {
+            background: #fed7d7;
+            color: #742a2a;
+            border: 1px solid #fc8181;
+        }
+
+        .notes {
+            font-size: 0.8rem;
+            color: #718096;
+            font-style: italic;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #718096;
+        }
+
+        .error-message {
+            background: #fed7d7;
+            color: #742a2a;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 8px;
+            border: 1px solid #fc8181;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+                padding: 15px 20px;
+            }
+            
+            .table-container {
+                padding: 20px;
+            }
+            
+            th, td {
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Dependency Version Dashboard</h1>
+            <p>Automated tracking of iOS & Android dependency versions</p>
+        </div>
+
+        <div class="last-updated">
+            <strong>Last Updated:</strong> <span id="lastUpdated">Loading...</span>
+        </div>
+
+        <div class="stats" id="stats">
+            <div class="stat-card">
+                <div class="stat-number up-to-date" id="upToDateCount">0</div>
+                <div class="stat-label">Up to Date</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number updates-available" id="updatesAvailableCount">0</div>
+                <div class="stat-label">Updates Available</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number tracks-branch" id="tracksBranchCount">0</div>
+                <div class="stat-label">Tracks Branch</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number error" id="errorCount">0</div>
+                <div class="stat-label">Errors</div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div id="loading" class="loading">
+                <h3>📡 Loading dependency data...</h3>
+                <p>Please wait while we fetch the latest version information.</p>
+            </div>
+
+            <div id="error" class="error-message" style="display: none;">
+                <h3>❌ Error Loading Data</h3>
+                <p>Unable to load dependency data. Please try refreshing the page.</p>
+            </div>
+
+            <table id="dependencyTable" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Dependency</th>
+                        <th>Current Version</th>
+                        <th>Latest Version</th>
+                        <th>Status</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody id="dependencyTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function formatDate(isoString) {
+            const date = new Date(isoString);
+            return date.toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                timeZoneName: 'short'
+            });
+        }
+
+        function getStatusClass(status) {
+            if (status.includes('✅')) return 'up-to-date';
+            if (status.includes('⚠️')) return 'update-available';
+            if (status.includes('ℹ️')) return 'tracks-branch';
+            if (status.includes('🚨')) return 'error';
+            return '';
+        }
+
+        function updateStats(dependencies) {
+            const upToDate = dependencies.filter(d => d.status.includes('✅')).length;
+            const updatesAvailable = dependencies.filter(d => d.status.includes('⚠️')).length;
+            const tracksBranch = dependencies.filter(d => d.status.includes('ℹ️')).length;
+            const errors = dependencies.filter(d => d.status.includes('🚨')).length;
+
+            document.getElementById('upToDateCount').textContent = upToDate;
+            document.getElementById('updatesAvailableCount').textContent = updatesAvailable;
+            document.getElementById('tracksBranchCount').textContent = tracksBranch;
+            document.getElementById('errorCount').textContent = errors;
+        }
+
+        function renderTable(dependencies) {
+            const tbody = document.getElementById('dependencyTableBody');
+            tbody.innerHTML = '';
+
+            dependencies.forEach(dep => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>
+                        <div class="dependency-name">${dep.name}</div>
+                        <a href="${dep.url}" target="_blank" class="dependency-url">${dep.url}</a>
+                    </td>
+                    <td><span class="version">${dep.current}</span></td>
+                    <td><span class="version">${dep.latest}</span></td>
+                    <td><span class="status ${getStatusClass(dep.status)}">${dep.status}</span></td>
+                    <td><span class="notes">${dep.notes || ''}</span></td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        async function loadDependencyData() {
+            try {
+                const response = await fetch('data.json');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                // Update last updated time
+                document.getElementById('lastUpdated').textContent = formatDate(data.last_updated);
+                
+                // Update statistics
+                updateStats(data.dependencies);
+                
+                // Render table
+                renderTable(data.dependencies);
+                
+                // Show table and hide loading
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('dependencyTable').style.display = 'table';
+                
+            } catch (error) {
+                console.error('Error loading dependency data:', error);
+                
+                // Show error message
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error').style.display = 'block';
+            }
+        }
+
+        // Load data when page loads
+        document.addEventListener('DOMContentLoaded', loadDependencyData);
+    </script>
+</body>
+</html> 

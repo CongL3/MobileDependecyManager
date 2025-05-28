@@ -1,0 +1,86 @@
+name: 📊 Update Dependency Versions
+
+on:
+  # Run every Monday at 9 AM UTC
+  schedule:
+    - cron: '0 9 * * 1'
+  
+  # Allow manual triggering
+  workflow_dispatch:
+
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write  # Required to commit changes
+    
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          
+      - name: 📦 Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          # No external dependencies needed - using only stdlib
+          
+      - name: 🔍 Check dependency versions
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python scripts/check_versions.py
+          
+      - name: 📊 Check for changes
+        id: check_changes
+        run: |
+          if git diff --quiet docs/data.json; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "No changes detected in dependency versions"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "Changes detected in dependency versions"
+            git diff docs/data.json
+          fi
+          
+      - name: 💾 Commit and push changes
+        if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          # Configure git
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          # Add and commit changes
+          git add docs/data.json
+          git commit -m "📊 Automated dependency version update
+
+          Updated dependency versions on $(date -u +'%Y-%m-%d at %H:%M UTC')
+          
+          This update was performed automatically by GitHub Actions."
+          
+          # Push changes
+          git push
+          
+      - name: 📝 Summary
+        run: |
+          echo "## 📊 Dependency Update Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ steps.check_changes.outputs.changed }}" == "true" ]; then
+            echo "✅ **Changes detected and committed**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "The dependency data has been updated and pushed to the repository." >> $GITHUB_STEP_SUMMARY
+            echo "View the updated dashboard at: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "ℹ️ **No changes detected**" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "All dependency versions are current - no updates needed." >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📈 View Dashboard" >> $GITHUB_STEP_SUMMARY
+          echo "Visit your live dashboard: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}" >> $GITHUB_STEP_SUMMARY 
