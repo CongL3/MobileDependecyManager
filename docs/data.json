@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-05-28T21:52:04.677367",
+  "last_updated": "2025-05-28T20:55:01.321693",
   "dependencies": [
     {
       "name": "AlertToast",
@@ -41,17 +41,15 @@
       "name": "SDWebImageSwiftUI",
       "url": "https://github.com/SDWebImage/SDWebImageSwiftUI",
       "current": "3.1.3",
-      "latest": "Unknown",
-      "status": "🚨 Error Checking",
-      "notes": "Could not fetch latest version"
+      "latest": "3.1.3",
+      "status": "✅ Up to Date"
     },
     {
       "name": "GoogleMobileAds",
       "url": "https://github.com/googleads/swift-package-manager-google-mobile-ads",
       "current": "11.0.0",
-      "latest": "Unknown",
-      "status": "🚨 Error Checking",
-      "notes": "Could not fetch latest version"
+      "latest": "12.5.0",
+      "status": "⚠️ Update Available"
     },
     {
       "name": "GoogleUserMessagingPlatform",
@@ -65,17 +63,15 @@
       "name": "swiftui-introspect",
       "url": "https://github.com/siteline/SwiftUI-Introspect.git",
       "current": "0.2.3",
-      "latest": "Unknown",
-      "status": "🚨 Error Checking",
-      "notes": "Could not fetch latest version"
+      "latest": "1.3.0",
+      "status": "⚠️ Update Available"
     },
     {
       "name": "TOCropViewController",
       "url": "https://github.com/TimOliver/TOCropViewController",
       "current": "2.6.1",
-      "latest": "Unknown",
-      "status": "🚨 Error Checking",
-      "notes": "Could not fetch latest version"
+      "latest": "2.7.4",
+      "status": "⚠️ Update Available"
     }
   ]
 }
