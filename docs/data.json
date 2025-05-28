@@ -1,33 +1,37 @@
 {
-  "last_updated": "2025-05-28T21:52:04.677367",
+  "last_updated_utc": "2025-05-28T21:03:19.788501+00:00",
   "dependencies": [
     {
       "name": "AlertToast",
       "url": "https://github.com/elai950/AlertToast",
       "current": "1.3.9",
       "latest": "1.3.9",
-      "status": "✅ Up to Date"
+      "status": "✅ Up to Date",
+      "notes": "Latest version from tags (no formal release found)."
     },
     {
       "name": "Firebase",
-      "url": "https://github.com/firebase/firebase-ios-sdk.git",
+      "url": "https://github.com/firebase/firebase-ios-sdk",
       "current": "10.0.0",
       "latest": "11.13.0",
-      "status": "⚠️ Update Available"
+      "status": "⚠️ Update Available",
+      "notes": "Latest version from releases."
     },
     {
       "name": "Lottie",
       "url": "https://github.com/airbnb/lottie-ios",
       "current": "4.0.0",
       "latest": "4.5.2",
-      "status": "⚠️ Update Available"
+      "status": "⚠️ Update Available",
+      "notes": "Latest version from releases."
     },
     {
       "name": "Mantis",
       "url": "https://github.com/guoyingtao/Mantis",
       "current": "2.8.0",
       "latest": "v2.25.2",
-      "status": "⚠️ Update Available"
+      "status": "⚠️ Update Available",
+      "notes": "Latest version from releases."
     },
     {
       "name": "Reachability",
@@ -35,23 +39,23 @@
       "current": "master",
       "latest": "21d1dc4",
       "status": "ℹ️ Tracks Branch",
-      "notes": "Tracking master branch"
+      "notes": "Tracking 'master' branch."
     },
     {
       "name": "SDWebImageSwiftUI",
       "url": "https://github.com/SDWebImage/SDWebImageSwiftUI",
       "current": "3.1.3",
-      "latest": "Unknown",
-      "status": "🚨 Error Checking",
-      "notes": "Could not fetch latest version"
+      "latest": "3.1.3",
+      "status": "✅ Up to Date",
+      "notes": "Latest version from releases."
     },
     {
       "name": "GoogleMobileAds",
       "url": "https://github.com/googleads/swift-package-manager-google-mobile-ads",
       "current": "11.0.0",
-      "latest": "Unknown",
-      "status": "🚨 Error Checking",
-      "notes": "Could not fetch latest version"
+      "latest": "12.5.0",
+      "status": "⚠️ Update Available",
+      "notes": "Latest version from releases."
     },
     {
       "name": "GoogleUserMessagingPlatform",
@@ -59,23 +63,23 @@
       "current": "2.1.0",
       "latest": "Unknown",
       "status": "🚨 Error Checking",
-      "notes": "Could not fetch latest version"
+      "notes": "Could not fetch latest release or tag."
     },
     {
       "name": "swiftui-introspect",
-      "url": "https://github.com/siteline/SwiftUI-Introspect.git",
+      "url": "https://github.com/siteline/SwiftUI-Introspect",
       "current": "0.2.3",
-      "latest": "Unknown",
-      "status": "🚨 Error Checking",
-      "notes": "Could not fetch latest version"
+      "latest": "1.3.0",
+      "status": "⚠️ Update Available",
+      "notes": "Latest version from releases."
     },
     {
       "name": "TOCropViewController",
       "url": "https://github.com/TimOliver/TOCropViewController",
       "current": "2.6.1",
-      "latest": "Unknown",
-      "status": "🚨 Error Checking",
-      "notes": "Could not fetch latest version"
+      "latest": "2.7.4",
+      "status": "⚠️ Update Available",
+      "notes": "Latest version from releases."
     }
   ]
 }
