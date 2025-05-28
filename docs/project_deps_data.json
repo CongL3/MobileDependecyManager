@@ -1,0 +1,215 @@
+{
+  "last_updated_utc": "2025-05-28T21:15:22.641552+00:00",
+  "project_url": "https://github.com/CongL3/AnniversaryTracker",
+  "project_ref_used": "default branch",
+  "package_resolved_path": "AnniversaryTracker.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+  "dependencies": [
+    {
+      "name": "abseil",
+      "source_url": "https://github.com/google/abseil-cpp-binary.git",
+      "resolved_version": "1.2024011601.1",
+      "is_branch_or_revision": true,
+      "latest_available_version": "1.2024072200.0",
+      "status": "ℹ️ Tracks Branch/Revision",
+      "notes": "Latest from GitHub release."
+    },
+    {
+      "name": "AlertToast",
+      "source_url": "https://github.com/elai950/AlertToast",
+      "resolved_version": "1.3.9",
+      "is_branch_or_revision": true,
+      "latest_available_version": "1.3.9",
+      "status": "ℹ️ Tracks Branch/Revision",
+      "notes": "Latest from GitHub tag."
+    },
+    {
+      "name": "AppCheck",
+      "source_url": "https://github.com/google/app-check.git",
+      "resolved_version": "10.19.2",
+      "is_branch_or_revision": true,
+      "latest_available_version": "11.2.0",
+      "status": "ℹ️ Tracks Branch/Revision",
+      "notes": "Latest from GitHub release."
+    },
+    {
+      "name": "Firebase",
+      "source_url": "https://github.com/firebase/firebase-ios-sdk.git",
+      "resolved_version": "10.29.0",
+      "is_branch_or_revision": true,
+      "latest_available_version": "11.13.0",
+      "status": "ℹ️ Tracks Branch/Revision",
+      "notes": "Latest from GitHub release."
+    },
+    {
+      "name": "GoogleAppMeasurement",
+      "source_url": "https://github.com/google/GoogleAppMeasurement.git",
+      "resolved_version": "10.28.0",
+      "is_branch_or_revision": true,
+      "latest_available_version": "11.13.0",
+      "status": "ℹ️ Tracks Branch/Revision",
+      "notes": "Latest from GitHub release."
+    },
+    {
+      "name": "GoogleDataTransport",
+      "source_url": "https://github.com/google/GoogleDataTransport.git",
+      "resolved_version": "9.4.0",
+      "is_branch_or_revision": true,
+      "latest_available_version": "10.1.0",
+      "status": "ℹ️ Tracks Branch/Revision",
+      "notes": "Latest from GitHub release."
+    },
+    {
+      "name": "GoogleUtilities",
+      "source_url": "https://github.com/google/GoogleUtilities.git",
+      "resolved_version": "7.13.3",
+      "is_branch_or_revision": true,
+      "latest_available_version": "8.1.0",
+      "status": "ℹ️ Tracks Branch/Revision",
+      "notes": "Latest from GitHub release."
+    },
+    {
+      "name": "gRPC",
+      "source_url": "https://github.com/google/grpc-binary.git",
+      "resolved_version": "1.62.2",
+      "is_branch_or_revision": true,
+      "latest_available_version": "1.69.0",
+      "status": "ℹ️ Tracks Branch/Revision",
+      "notes": "Latest from GitHub release."
+    },
+    {
+      "name": "GTMSessionFetcher",
+      "source_url": "https://github.com/google/gtm-session-fetcher.git",
+      "resolved_version": "3.5.0",
+      "is_branch_or_revision": true,
+      "latest_available_version": "v4.5.0",
+      "status": "ℹ️ Tracks Branch/Revision",
+      "notes": "Latest from GitHub release."
+    },
+    {
+      "name": "InteropForGoogle",
+      "source_url": "https://github.com/google/interop-ios-for-google-sdks.git",
+      "resolved_version": "100.0.0",
+      "is_branch_or_revision": true,
+      "latest_available_version": "CocoaPods-101.0.0",
+      "status": "ℹ️ Tracks Branch/Revision",
+      "notes": "Latest from GitHub tag."
+    },
+    {
+      "name": "leveldb",
+      "source_url": "https://github.com/firebase/leveldb.git",
+      "resolved_version": "1.22.5",
+      "is_branch_or_revision": true,
+      "latest_available_version": "CocoaPods-1.22.6",
+      "status": "ℹ️ Tracks Branch/Revision",
+      "notes": "Latest from GitHub release."
+    },
+    {
+      "name": "Lottie",
+      "source_url": "https://github.com/airbnb/lottie-ios",
+      "resolved_version": "4.5.0",
+      "is_branch_or_revision": true,
+      "latest_available_version": "4.5.2",
+      "status": "ℹ️ Tracks Branch/Revision",
+      "notes": "Latest from GitHub release."
+    },
+    {
+      "name": "Mantis",
+      "source_url": "https://github.com/guoyingtao/Mantis",
+      "resolved_version": "2.21.0",
+      "is_branch_or_revision": true,
+      "latest_available_version": "v2.25.2",
+      "status": "ℹ️ Tracks Branch/Revision",
+      "notes": "Latest from GitHub release."
+    },
+    {
+      "name": "nanopb",
+      "source_url": "https://github.com/firebase/nanopb.git",
+      "resolved_version": "2.30910.0",
+      "is_branch_or_revision": true,
+      "latest_available_version": "2.30910.0",
+      "status": "✅ Up to Date (Branch/Revision)",
+      "notes": "Latest from GitHub release."
+    },
+    {
+      "name": "Promises",
+      "source_url": "https://github.com/google/promises.git",
+      "resolved_version": "2.4.0",
+      "is_branch_or_revision": true,
+      "latest_available_version": "2.3.1",
+      "status": "ℹ️ Tracks Branch/Revision",
+      "notes": "Latest from GitHub release."
+    },
+    {
+      "name": "Reachability",
+      "source_url": "https://github.com/ashleymills/Reachability.swift",
+      "resolved_version": "master",
+      "is_branch_or_revision": true,
+      "latest_available_version": "21d1dc4",
+      "status": "ℹ️ Tracks Branch/Revision",
+      "notes": "Latest commit on branch 'master'."
+    },
+    {
+      "name": "SDWebImage",
+      "source_url": "https://github.com/SDWebImage/SDWebImage.git",
+      "resolved_version": "5.20.0",
+      "is_branch_or_revision": true,
+      "latest_available_version": "5.21.0",
+      "status": "ℹ️ Tracks Branch/Revision",
+      "notes": "Latest from GitHub release."
+    },
+    {
+      "name": "SDWebImageSwiftUI",
+      "source_url": "https://github.com/SDWebImage/SDWebImageSwiftUI",
+      "resolved_version": "3.1.3",
+      "is_branch_or_revision": true,
+      "latest_available_version": "3.1.3",
+      "status": "ℹ️ Tracks Branch/Revision",
+      "notes": "Latest from GitHub release."
+    },
+    {
+      "name": "GoogleMobileAds",
+      "source_url": "https://github.com/googleads/swift-package-manager-google-mobile-ads",
+      "resolved_version": "11.7.0",
+      "is_branch_or_revision": true,
+      "latest_available_version": "12.5.0",
+      "status": "ℹ️ Tracks Branch/Revision",
+      "notes": "Latest from GitHub release."
+    },
+    {
+      "name": "GoogleUserMessagingPlatform",
+      "source_url": "https://github.com/googleads/swift-package-manager-google-user-messaging-platform",
+      "resolved_version": "2.5.0",
+      "is_branch_or_revision": true,
+      "latest_available_version": "3.0.0",
+      "status": "ℹ️ Tracks Branch/Revision",
+      "notes": "Latest from GitHub release."
+    },
+    {
+      "name": "SwiftProtobuf",
+      "source_url": "https://github.com/apple/swift-protobuf.git",
+      "resolved_version": "1.27.0",
+      "is_branch_or_revision": true,
+      "latest_available_version": "1.30.0",
+      "status": "ℹ️ Tracks Branch/Revision",
+      "notes": "Latest from GitHub release."
+    },
+    {
+      "name": "swiftui-introspect",
+      "source_url": "https://github.com/siteline/SwiftUI-Introspect.git",
+      "resolved_version": "0.12.0",
+      "is_branch_or_revision": true,
+      "latest_available_version": "1.3.0",
+      "status": "ℹ️ Tracks Branch/Revision",
+      "notes": "Latest from GitHub release."
+    },
+    {
+      "name": "TOCropViewController",
+      "source_url": "https://github.com/TimOliver/TOCropViewController.git",
+      "resolved_version": "2.7.4",
+      "is_branch_or_revision": true,
+      "latest_available_version": "2.7.4",
+      "status": "ℹ️ Tracks Branch/Revision",
+      "notes": "Latest from GitHub release."
+    }
+  ]
+}
