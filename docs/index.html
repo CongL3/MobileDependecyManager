@@ -378,6 +378,7 @@
             projectInfo.innerHTML = infoText;
         }
 
+
         function renderTable(dependencies) {
             const tbody = document.getElementById('dependencyTableBody');
             tbody.innerHTML = ''; // Clear existing rows
@@ -387,14 +388,13 @@
                 
                 // Data keys from your latest check_versions2.py output
                 const name = dep.name;
-                const url = dep.source_url; // Python script uses source_url
-                const current = dep.resolved_version || dep.current;
-                const latestVersion = dep.latest_available_version; // Python script uses latest_available_version
+                const url = dep.source_url;
+                const currentVersionValue = dep.resolved_value; // <<< USE resolved_value FROM Python
+                const latestVersion = dep.latest_available_version;
                 const statusText = dep.status;
-                const notesText = dep.notes || ''; // Notes might be optional
-                const pinType = dep.pin_type || ''; // Pin type might be useful to display
+                const notesText = dep.notes || '';
+                const pinType = dep.pin_type || '';
 
-                // Constructing table cells
                 // Cell 1: Name and URL
                 const cellNameUrl = document.createElement('td');
                 cellNameUrl.innerHTML = `
@@ -405,7 +405,7 @@
 
                 // Cell 2: Current Version
                 const cellCurrentVersion = document.createElement('td');
-                cellCurrentVersion.innerHTML = `<span class="version">${currentVersion}</span>`;
+                cellCurrentVersion.innerHTML = `<span class="version">${currentVersionValue}</span>`; // <<< USE THE CORRECT VARIABLE
                 row.appendChild(cellCurrentVersion);
 
                 // Cell 3: Latest Version
@@ -421,7 +421,7 @@
                 // Cell 5: Notes (and Pin Type if you want)
                 const cellNotes = document.createElement('td');
                 let notesContent = `<span class="notes">${notesText}</span>`;
-                if (pinType) { // Optionally display pin type
+                if (pinType) {
                     notesContent += `<br><span class="notes" style="font-size: 0.75em;">(Pin: ${pinType})</span>`;
                 }
                 cellNotes.innerHTML = notesContent;
