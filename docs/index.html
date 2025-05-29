@@ -300,14 +300,16 @@
             <table id="dependencyTable" style="display: none;">
                 <thead>
                     <tr>
-                        <th>Dependency</th>
-                        <th>Current Version</th>
-                        <th>Latest Version</th>
-                        <th>Status</th>
-                        <th>Notes</th>
+                        <!-- ADDED: class="sortable-header", data-column-index, onclick, and span.sort-arrow -->
+                        <th class="sortable-header" data-column-index="0" onclick="sortTable(0, this)">Dependency <span class="sort-arrow"></span></th>
+                        <th class="sortable-header" data-column-index="1" onclick="sortTable(1, this)">Current Version <span class="sort-arrow"></span></th>
+                        <th class="sortable-header" data-column-index="2" onclick="sortTable(2, this)">Latest Version <span class="sort-arrow"></span></th>
+                        <th class="sortable-header" data-column-index="3" onclick="sortTable(3, this)">Status <span class="sort-arrow"></span></th>
+                        <th class="sortable-header" data-column-index="4" onclick="sortTable(4, this)">Notes <span class="sort-arrow"></span></th>
                     </tr>
                 </thead>
                 <tbody id="dependencyTableBody">
+                    <!-- Rows will be populated by JavaScript -->
                 </tbody>
             </table>
         </div>
