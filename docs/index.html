@@ -101,7 +101,7 @@
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
-        th {
+        th { /* General th styling */
             background: #4a5568;
             color: white;
             padding: 15px 20px;
@@ -224,13 +224,14 @@
             }
         }
 
+        /* Styles for sortable headers */
         .sortable-header {
             cursor: pointer;
-            position: relative; /* For positioning the arrow */
+            position: relative; 
         }
 
         .sortable-header:hover {
-            background-color: #5a67d8; /* Slightly lighter on hover */
+            background-color: #5a67d8; 
         }
 
         .sort-arrow {
@@ -245,12 +246,12 @@
         }
 
         .sortable-header.sorted-asc .sort-arrow {
-            border-bottom: 5px solid white; /* Arrow pointing up */
+            border-bottom: 5px solid white; 
             border-top: 0;
         }
 
         .sortable-header.sorted-desc .sort-arrow {
-            border-top: 5px solid white; /* Arrow pointing down */
+            border-top: 5px solid white; 
             border-bottom: 0;
         }
 
@@ -300,7 +301,6 @@
             <table id="dependencyTable" style="display: none;">
                 <thead>
                     <tr>
-                        <!-- ADDED: class="sortable-header", data-column-index, onclick, and span.sort-arrow -->
                         <th class="sortable-header" data-column-index="0" onclick="sortTable(0, this)">Dependency <span class="sort-arrow"></span></th>
                         <th class="sortable-header" data-column-index="1" onclick="sortTable(1, this)">Current Version <span class="sort-arrow"></span></th>
                         <th class="sortable-header" data-column-index="2" onclick="sortTable(2, this)">Latest Version <span class="sort-arrow"></span></th>
@@ -331,7 +331,7 @@
         function getStatusClass(status) {
             if (status.includes('✅')) return 'up-to-date';
             if (status.includes('⚠️')) return 'update-available';
-            if (status.includes('ℹ️')) return 'tracks-branch';
+            if (status.includes('ℹ️')) return 'tracks-branch'; // Ensure this matches status text
             if (status.includes('🚨')) return 'error';
             return '';
         }
@@ -339,7 +339,8 @@
         function updateStats(dependencies) {
             const upToDate = dependencies.filter(d => d.status.includes('✅')).length;
             const updatesAvailable = dependencies.filter(d => d.status.includes('⚠️')).length;
-            const tracksBranch = dependencies.filter(d => d.status.includes('ℹ️')).length;
+            // Ensure the filter for tracksBranch matches the status text from your data
+            const tracksBranch = dependencies.filter(d => d.status.includes('ℹ️ Tracks Branch') || d.status.includes('ℹ️ Pinned to Revision') || d.status.includes('ℹ️ Tracks Branch/Revision')).length;
             const errors = dependencies.filter(d => d.status.includes('🚨')).length;
 
             document.getElementById('upToDateCount').textContent = upToDate;
@@ -348,9 +349,9 @@
             document.getElementById('errorCount').textContent = errors;
         }
 
+        // Store the current sort state
         let currentSortColumnIndex = -1;
         let currentSortDirection = 'asc'; // 'asc' or 'desc'
-        let originalTableRows = []; // To store rows before sorting for table re-rendering
 
         function sortTable(columnIndex, headerElement) {
             const tableBody = document.getElementById('dependencyTableBody');
@@ -361,57 +362,53 @@
                 currentSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
             } else {
                 currentSortColumnIndex = columnIndex;
-                currentSortDirection = 'asc'; // Default to ascending for a new column
+                currentSortDirection = 'asc'; 
             }
 
             // Update header sort indicators
             document.querySelectorAll('.sortable-header').forEach(th => {
                 th.classList.remove('sorted-asc', 'sorted-desc');
-                th.querySelector('.sort-arrow').style.opacity = '0.6'; // Reset opacity
+                const arrow = th.querySelector('.sort-arrow');
+                if (arrow) arrow.style.opacity = '0.6'; 
             });
             headerElement.classList.add(currentSortDirection === 'asc' ? 'sorted-asc' : 'sorted-desc');
-            headerElement.querySelector('.sort-arrow').style.opacity = '1';
+            const clickedArrow = headerElement.querySelector('.sort-arrow');
+            if (clickedArrow) clickedArrow.style.opacity = '1';
 
 
             // Sorting logic
             rows.sort((rowA, rowB) => {
                 let valA, valB;
 
-                // Get cell content for comparison
-                // For "Dependency" column, we might want to sort by the name text, not the whole HTML
-                if (columnIndex === 0) { // Dependency Name/URL column
+                if (columnIndex === 0) { 
                     valA = rowA.cells[columnIndex].querySelector('.dependency-name')?.textContent.trim().toLowerCase() || '';
                     valB = rowB.cells[columnIndex].querySelector('.dependency-name')?.textContent.trim().toLowerCase() || '';
-                } else if (columnIndex === 1 || columnIndex === 2) { // Version columns
-                    // Attempt to sort versions semantically if possible, otherwise fallback to string
-                    // This is a very basic semantic sort, 'packaging' library would be better if this was Python
+                } else if (columnIndex === 1 || columnIndex === 2) { 
                     const verA = rowA.cells[columnIndex].querySelector('.version')?.textContent.trim() || '';
                     const verB = rowB.cells[columnIndex].querySelector('.version')?.textContent.trim() || '';
                     
-                    // Basic numeric sort for simple versions like X.Y.Z
-                    // More complex versions (e.g., with 'v', 'alpha', 'beta') need a proper semver library
                     const tryParseVersion = (vStr) => {
+                        // Handle cases like "CocoaPods-101.0.0" or SHAs by falling back to string sort
+                        if (vStr.includes('-') || vStr.length === 7 && /^[0-9a-f]+$/.test(vStr)) { // Basic SHA check
+                            return vStr.toLowerCase();
+                        }
                         const parts = vStr.replace(/^v/i, '').split('.').map(Number);
-                        // Ensure all parts are numbers and sum them for a rough comparison value
-                        // This is NOT a true semantic version sort but better than pure string sort for simple cases.
                         if (parts.every(p => !isNaN(p))) {
-                            // Weight major more than minor, minor more than patch for basic comparison
                             return parts.reduce((acc, val, idx) => acc + val * Math.pow(1000, 2 - idx), 0);
                         }
-                        return vStr.toLowerCase(); // Fallback to string if not simple numeric
+                        return vStr.toLowerCase(); 
                     };
                     valA = tryParseVersion(verA);
                     valB = tryParseVersion(verB);
 
-                } else { // For Status and Notes columns (or any other text-based)
+                } else { 
                     valA = rowA.cells[columnIndex].textContent.trim().toLowerCase();
                     valB = rowB.cells[columnIndex].textContent.trim().toLowerCase();
                 }
 
-
                 if (typeof valA === 'number' && typeof valB === 'number') {
                      return currentSortDirection === 'asc' ? valA - valB : valB - valA;
-                } else { // String comparison
+                } else { 
                     if (valA < valB) return currentSortDirection === 'asc' ? -1 : 1;
                     if (valA > valB) return currentSortDirection === 'asc' ? 1 : -1;
                     return 0;
@@ -432,36 +429,28 @@
                 
                 const data = await response.json();
                 
-                // Update last updated time - handle both old and new format
                 const lastUpdated = data.last_updated_utc || data.last_updated;
                 document.getElementById('lastUpdated').textContent = formatDate(lastUpdated);
                 
-                // Update project information if available
                 if (data.project_url) {
                     updateProjectInfo(data);
                 }
                 
-                // Update statistics
                 updateStats(data.dependencies);
-                
-                // Render table
                 renderTable(data.dependencies);
                 
-                // Show table and hide loading
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('dependencyTable').style.display = 'table';
                 
             } catch (error) {
                 console.error('Error loading dependency data:', error);
-                
-                // Show error message
                 document.getElementById('loading').style.display = 'none';
                 document.getElementById('error').style.display = 'block';
+                document.getElementById('error').querySelector('p').textContent = `Unable to load dependency data. Error: ${error.message}. Please try refreshing the page.`;
             }
         }
 
         function updateProjectInfo(data) {
-            // Add project information to the header if it doesn't exist
             const header = document.querySelector('.header');
             let projectInfo = document.getElementById('projectInfo');
             
@@ -485,24 +474,21 @@
             projectInfo.innerHTML = infoText;
         }
 
-
         function renderTable(dependencies) {
             const tbody = document.getElementById('dependencyTableBody');
-            tbody.innerHTML = ''; // Clear existing rows
+            tbody.innerHTML = ''; 
 
             dependencies.forEach(dep => {
                 const row = document.createElement('tr');
                 
-                // Data keys from your latest check_versions2.py output
                 const name = dep.name;
                 const url = dep.source_url;
-                const currentVersionValue = dep.resolved_value; // <<< USE resolved_value FROM Python
+                const currentVersionValue = dep.resolved_value; 
                 const latestVersion = dep.latest_available_version;
                 const statusText = dep.status;
                 const notesText = dep.notes || '';
                 const pinType = dep.pin_type || '';
 
-                // Cell 1: Name and URL
                 const cellNameUrl = document.createElement('td');
                 cellNameUrl.innerHTML = `
                     <div class="dependency-name">${name}</div>
@@ -510,22 +496,18 @@
                 `;
                 row.appendChild(cellNameUrl);
 
-                // Cell 2: Current Version
                 const cellCurrentVersion = document.createElement('td');
-                cellCurrentVersion.innerHTML = `<span class="version">${currentVersionValue}</span>`; // <<< USE THE CORRECT VARIABLE
+                cellCurrentVersion.innerHTML = `<span class="version">${currentVersionValue}</span>`; 
                 row.appendChild(cellCurrentVersion);
 
-                // Cell 3: Latest Version
                 const cellLatestVersion = document.createElement('td');
                 cellLatestVersion.innerHTML = `<span class="version">${latestVersion}</span>`;
                 row.appendChild(cellLatestVersion);
                 
-                // Cell 4: Status
                 const cellStatus = document.createElement('td');
                 cellStatus.innerHTML = `<span class="status ${getStatusClass(statusText)}">${statusText}</span>`;
                 row.appendChild(cellStatus);
 
-                // Cell 5: Notes (and Pin Type if you want)
                 const cellNotes = document.createElement('td');
                 let notesContent = `<span class="notes">${notesText}</span>`;
                 if (pinType) {
@@ -538,8 +520,7 @@
             });
         }
 
-        // Load data when page loads
         document.addEventListener('DOMContentLoaded', loadDependencyData);
     </script>
 </body>
-</html> 
+</html>
