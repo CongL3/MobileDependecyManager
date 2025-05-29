@@ -380,29 +380,52 @@
 
         function renderTable(dependencies) {
             const tbody = document.getElementById('dependencyTableBody');
-            tbody.innerHTML = '';
+            tbody.innerHTML = ''; // Clear existing rows
 
             dependencies.forEach(dep => {
                 const row = document.createElement('tr');
                 
-                // Handle both old and new data formats
+                // Data keys from your latest check_versions2.py output
                 const name = dep.name;
-                const url = dep.source_url || dep.url;
+                const url = dep.source_url; // Python script uses source_url
                 const current = dep.resolved_version || dep.current;
-                const latest = dep.latest_available_version || dep.latest;
-                const status = dep.status;
-                const notes = dep.notes || '';
-                
-                row.innerHTML = `
-                    <td>
-                        <div class="dependency-name">${name}</div>
-                        <a href="${url}" target="_blank" class="dependency-url">${url}</a>
-                    </td>
-                    <td><span class="version">${current}</span></td>
-                    <td><span class="version">${latest}</span></td>
-                    <td><span class="status ${getStatusClass(status)}">${status}</span></td>
-                    <td><span class="notes">${notes}</span></td>
+                const latestVersion = dep.latest_available_version; // Python script uses latest_available_version
+                const statusText = dep.status;
+                const notesText = dep.notes || ''; // Notes might be optional
+                const pinType = dep.pin_type || ''; // Pin type might be useful to display
+
+                // Constructing table cells
+                // Cell 1: Name and URL
+                const cellNameUrl = document.createElement('td');
+                cellNameUrl.innerHTML = `
+                    <div class="dependency-name">${name}</div>
+                    <a href="${url}" target="_blank" class="dependency-url">${url}</a>
                 `;
+                row.appendChild(cellNameUrl);
+
+                // Cell 2: Current Version
+                const cellCurrentVersion = document.createElement('td');
+                cellCurrentVersion.innerHTML = `<span class="version">${currentVersion}</span>`;
+                row.appendChild(cellCurrentVersion);
+
+                // Cell 3: Latest Version
+                const cellLatestVersion = document.createElement('td');
+                cellLatestVersion.innerHTML = `<span class="version">${latestVersion}</span>`;
+                row.appendChild(cellLatestVersion);
+                
+                // Cell 4: Status
+                const cellStatus = document.createElement('td');
+                cellStatus.innerHTML = `<span class="status ${getStatusClass(statusText)}">${statusText}</span>`;
+                row.appendChild(cellStatus);
+
+                // Cell 5: Notes (and Pin Type if you want)
+                const cellNotes = document.createElement('td');
+                let notesContent = `<span class="notes">${notesText}</span>`;
+                if (pinType) { // Optionally display pin type
+                    notesContent += `<br><span class="notes" style="font-size: 0.75em;">(Pin: ${pinType})</span>`;
+                }
+                cellNotes.innerHTML = notesContent;
+                row.appendChild(cellNotes);
                 
                 tbody.appendChild(row);
             });
